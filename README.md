@@ -1,23 +1,14 @@
-# Telegram Start Bot
+# Discord Bot Template
 
-A simple boilerplate for a Telegram bot using the `python-telegram-bot` library.
+A basic Discord bot using `discord.py`.
 
-## Setup Instructions
-
-1. **Get a Token**: Message [@BotFather](https://t.me/botfather) on Telegram to create a bot and get your API token.
-2. **Install Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. **Set Environment Variable**:
-   - Linux/macOS: `export TELEGRAM_BOT_TOKEN='your_token_here'`
-   - Windows: `set TELEGRAM_BOT_TOKEN=your_token_here`
-   - *Alternatively, paste the token directly into `main.py` (not recommended for production).*
-4. **Run the Bot**:
-   ```bash
-   python main.py
-   ```
+## Setup
+1. Install dependencies: `pip install -r requirements.txt`
+2. Create a bot application on the [Discord Developer Portal](https://discord.com/developers/applications).
+3. Copy your Bot Token and paste it into the `.env` file.
+4. Ensure 'Message Content Intent' is enabled in the Developer Portal.
+5. Run the bot: `python bot.py`
 
 ## Commands
-- `/start`: Greets the user.
-- `/help`: Lists available commands.
+- `!ping`: Returns bot latency.
+- `!echo <message>`: Repeats the provided message.
