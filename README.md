@@ -1,29 +1,20 @@
-# Telegram File to URL Bot
+# Telegram Bot (Updated)
 
-This bot converts any image, video, or document sent to it into a public direct URL using the Catbox API.
+Yeh ek updated Telegram bot hai jo `python-telegram-bot` library ka upyog karta hai.
 
-## Setup Instructions
+## Setup Instructions:
 
-1.  **Get API Credentials:**
-    - Go to [my.telegram.org](https://my.telegram.org) to get your `API_ID` and `API_HASH`.
-    - Message [@BotFather](https://t.me/BotFather) on Telegram to get a `BOT_TOKEN`.
+1. **Python Install Karein**: Make sure aapke system mein Python 3.8+ installed hai.
+2. **Dependencies Install Karein**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. **Token Update Karein**: `main.py` file mein `YOUR_TELEGRAM_BOT_TOKEN` ki jagah apna asli token dalein jo @BotFather se mila hai.
+4. **Bot Run Karein**:
+   ```bash
+   python main.py
+   ```
 
-2.  **Environment Variables:**
-    - Set the following environment variables or edit them directly in `main.py`:
-      - `API_ID`
-      - `API_HASH`
-      - `BOT_TOKEN`
-
-3.  **Install Dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4.  **Run the Bot:**
-    ```bash
-    python main.py
-    ```
-
-## Usage
-- Send any photo, video, or GIF to the bot.
-- The bot will reply with a permanent `https://catbox.moe/...` link.
+## Commands:
+- `/start`: Bot ko shuru karne ke liye.
+- `/help`: Madad ke liye.
