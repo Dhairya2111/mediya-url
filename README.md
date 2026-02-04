@@ -1,20 +1,26 @@
-# Telegram Bot (Updated)
+# Python Project Template
 
-Yeh ek updated Telegram bot hai jo `python-telegram-bot` library ka upyog karta hai.
+This is a clean, production-ready Python project structure.
 
-## Setup Instructions:
+## Setup Instructions
 
-1. **Python Install Karein**: Make sure aapke system mein Python 3.8+ installed hai.
-2. **Dependencies Install Karein**:
+1. **Create a Virtual Environment**:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+2. **Install Dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
-3. **Token Update Karein**: `main.py` file mein `YOUR_TELEGRAM_BOT_TOKEN` ki jagah apna asli token dalein jo @BotFather se mila hai.
-4. **Bot Run Karein**:
+
+3. **Run the Application**:
    ```bash
    python main.py
    ```
 
-## Commands:
-- `/start`: Bot ko shuru karne ke liye.
-- `/help`: Madad ke liye.
+## Project Structure
+- `main.py`: The primary entry point for the application.
+- `requirements.txt`: List of Python package dependencies.
+- `README.md`: Documentation and setup guide.
