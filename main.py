@@ -1,77 +1,63 @@
-import discord
-import yt_dlp
+import os
 import asyncio
-from discord.ext import commands
+from pyrogram import Client, filters
+from pytgcalls import PyTgCalls, idle
+from pytgcalls.types import AudioPiped
+from yt_dlp import YoutubeDL
 
-# Bot configuration
-TOKEN = 'YOUR_BOT_TOKEN_HERE'
-INTENTS = discord.Intents.default()
-INTENTS.message_content = True
+# --- CONFIGURATION ---
+API_ID = 1234567  # Get from my.telegram.org
+API_HASH = "your_api_hash"
+BOT_TOKEN = "your_bot_token"
+SESSION_STRING = "your_pyrogram_session" # String session of a user account to join VCs
 
-bot = commands.Bot(command_prefix='/', intents=INTENTS)
+# Initialize Clients
+bot = Client("MusicBot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
+user_app = Client("UserAssistant", api_id=API_ID, api_hash=API_HASH, session_string=SESSION_STRING)
+call_py = PyTgCalls(user_app)
 
-# YDL options for audio extraction
-YDL_OPTIONS = {
-    'format': 'bestaudio/best',
-    'noplaylist': True,
-    'quiet': True,
-    'default_search': 'ytsearch',
-    'postprocessors': [{
-        'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'mp3',
-        'preferredquality': '192',
-    }],
-}
+YDL_OPTIONS = {"format": "bestaudio/best", "quiet": True, "noplaylist": True}
 
-FFMPEG_OPTIONS = {
-    'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
-    'options': '-vn',
-}
+@bot.on_message(filters.command("start"))
+async def start(client, message):
+    await message.reply_text("👋 Hello! I am a high-quality Music Bot.\n\nCommands:\n/play [song name] - Play music\n/stop - Stop music\n/skip - Skip current track")
 
-@bot.event
-async def on_ready():
-    print(f'Logged in as {bot.user.name}')
-
-@bot.command(name='play')
-async def play(ctx, *, search: str):
-    """Plays a song from YouTube based on search query."""
-    if not ctx.author.voice:
-        return await ctx.send("You must be in a voice channel to use this command!")
-
-    channel = ctx.author.voice.channel
+@bot.on_message(filters.command("play") & filters.group)
+async def play(client, message):
+    if len(message.command) < 2:
+        return await message.reply_text("❌ Please provide a song name!")
     
-    # Connect to voice channel
-    if ctx.voice_client is None:
-        await channel.connect()
-    else:
-        await ctx.voice_client.move_to(channel)
+    query = " ".join(message.command[1:])
+    m = await message.reply_text("🔎 Searching...")
 
-    async with ctx.typing():
-        with yt_dlp.YoutubeDL(YDL_OPTIONS) as ydl:
-            try:
-                info = ydl.extract_info(f"ytsearch:{search}", download=False)['entries'][0]
-                url = info['url']
-                title = info['title']
-            except Exception as e:
-                return await ctx.send(f"An error occurred: {str(e)}")
+    try:
+        with YoutubeDL(YDL_OPTIONS) as ydl:
+            info = ydl.extract_info(f"ytsearch:{query}", download=False)['entries'][0]
+            url = info['url']
+            title = info['title']
 
-        # Stop current audio if playing
-        if ctx.voice_client.is_playing():
-            ctx.voice_client.stop()
+        await call_py.join_group_call(
+            message.chat.id,
+            AudioPiped(url)
+        )
+        await m.edit(f"🎶 **Started Playing:** {title}")
+    except Exception as e:
+        await m.edit(f"❌ Error: {str(e)}")
 
-        source = await discord.FFmpegOpusAudio.from_probe(url, **FFMPEG_OPTIONS)
-        ctx.voice_client.play(source)
-        
-    await ctx.send(f'Now playing: **{title}**')
+@bot.on_message(filters.command("stop") & filters.group)
+async def stop(client, message):
+    try:
+        await call_py.leave_group_call(message.chat.id)
+        await message.reply_text("⏹ Stopped and left the voice chat.")
+    except:
+        await message.reply_text("❌ Not currently playing anything.")
 
-@bot.command(name='stop')
-async def stop(ctx):
-    """Stops the music and leaves the voice channel."""
-    if ctx.voice_client:
-        await ctx.voice_client.disconnect()
-        await ctx.send("Disconnected from voice channel.")
-    else:
-        await ctx.send("I am not connected to a voice channel.")
+async def main():
+    await bot.start()
+    await user_app.start()
+    await call_py.start()
+    print("Bot is running...")
+    await idle()
 
 if __name__ == "__main__":
-    bot.run(TOKEN)
+    asyncio.get_event_loop().run_until_complete(main())
