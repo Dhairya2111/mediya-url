@@ -1,15 +1,23 @@
-# 1. Update system
-sudo apt update && sudo apt upgrade -y
+import os
+import sys
 
-# 2. Install Python and Git
-sudo apt install python3-pip git -y
+def main():
+    """
+    A simple entry point for a Python application.
+    This script demonstrates a basic CLI structure.
+    """
+    print("--- Python Application Started ---")
+    
+    # Example logic: Read environment variables or arguments
+    user_name = os.getenv("USER_NAME", "Developer")
+    print(f"Hello, {user_name}!")
+    
+    if len(sys.argv) > 1:
+        print(f"Arguments received: {sys.argv[1:]}")
+    else:
+        print("No command line arguments provided.")
 
-# 3. Clone your repo
-git clone https://github.com/Dhairya2111/mediya-url.git
-cd mediya-url
+    print("--- Application Finished ---")
 
-# 4. Install dependencies
-pip3 install -r requirements.txt
-
-# 5. Run bot in background
-nohup python3 main.py &
+if __name__ == "__main__":
+    main()
