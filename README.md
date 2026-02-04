@@ -1,26 +1,23 @@
-# Python Project Template
+# Telegram Start Bot
 
-This is a clean, production-ready Python project structure.
+A simple boilerplate for a Telegram bot using the `python-telegram-bot` library.
 
 ## Setup Instructions
 
-1. **Create a Virtual Environment**:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
+1. **Get a Token**: Message [@BotFather](https://t.me/botfather) on Telegram to create a bot and get your API token.
 2. **Install Dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
-
-3. **Run the Application**:
+3. **Set Environment Variable**:
+   - Linux/macOS: `export TELEGRAM_BOT_TOKEN='your_token_here'`
+   - Windows: `set TELEGRAM_BOT_TOKEN=your_token_here`
+   - *Alternatively, paste the token directly into `main.py` (not recommended for production).*
+4. **Run the Bot**:
    ```bash
    python main.py
    ```
 
-## Project Structure
-- `main.py`: The primary entry point for the application.
-- `requirements.txt`: List of Python package dependencies.
-- `README.md`: Documentation and setup guide.
+## Commands
+- `/start`: Greets the user.
+- `/help`: Lists available commands.
