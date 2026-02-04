@@ -1,23 +1,30 @@
-# Discord Music Bot
+# Telegram Music Bot
 
-A simple Discord bot to play music from YouTube.
+A powerful Telegram Music Bot that plays high-quality audio in group voice chats.
 
-## Prerequisites
-1. Install [FFmpeg](https://ffmpeg.org/download.html) on your system and ensure it's in your PATH.
-2. Create a Discord Bot on the [Developer Portal](https://discord.com/developers/applications).
-3. Enable `Message Content Intent` in the Bot settings.
+## Setup Instructions
 
-## Setup
-1. Install dependencies:
+1. **Get API Credentials:**
+   - Get `API_ID` and `API_HASH` from [my.telegram.org](https://my.telegram.org).
+   - Get `BOT_TOKEN` from [@BotFather](https://t.me/BotFather).
+
+2. **Generate Session String:**
+   - You need a Pyrogram Session String for the user account that will join the voice chat. Use a session generator script or library.
+
+3. **Install Dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
-2. Open `main.py` and replace `YOUR_BOT_TOKEN_HERE` with your actual bot token.
-3. Run the bot:
+
+4. **Configure:**
+   - Open `main.py` and replace the placeholders with your actual credentials.
+
+5. **Run the Bot:**
    ```bash
    python main.py
    ```
 
-## Usage
-- `/play <song name or url>`: Joins your voice channel and plays the song.
-- `/stop`: Stops the music and leaves the channel.
+## Commands
+- `/play <song name>`: Search and play music.
+- `/stop`: Stop the music and leave the chat.
+- `/start`: Check if the bot is alive.
