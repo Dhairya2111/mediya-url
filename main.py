@@ -1,13 +1,15 @@
-import rembg
-from PIL import Image
-import io
+# 1. Update system
+sudo apt update && sudo apt upgrade -y
 
-def remove_background(input_path, output_path):
-    with open(input_path, 'rb') as i:
-        input_image = i.read()
-        output_image = rembg.remove(input_image)
-        with open(output_path, 'wb') as o:
-            o.write(output_image)
+# 2. Install Python and Git
+sudo apt install python3-pip git -y
 
-# Example usage for background removal
-# remove_background('input.jpg', 'output.png')
+# 3. Clone your repo
+git clone https://github.com/Dhairya2111/mediya-url.git
+cd mediya-url
+
+# 4. Install dependencies
+pip3 install -r requirements.txt
+
+# 5. Run bot in background
+nohup python3 main.py &
