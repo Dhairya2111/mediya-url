@@ -1,1 +1,3 @@
-python-telegram-bot==20.3
+# No external dependencies required for this basic template
+# Add your dependencies below, e.g.:
+# requests==2.31.0
