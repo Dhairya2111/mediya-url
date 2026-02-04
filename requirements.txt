@@ -1,3 +1,5 @@
-discord.py
+pyrogram
+tgcalls
+pytgcalls
 yt-dlp
-PyNaCl
+tgcrypto
